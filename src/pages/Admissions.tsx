@@ -8,16 +8,59 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle2, FileText, CreditCard, GraduationCap, ArrowRight } from "lucide-react";
+import { z } from "zod";
+import { useState } from "react";
+
+const admissionSchema = z.object({
+  firstName: z.string().trim().min(2, "First name must be at least 2 characters").max(50, "First name too long"),
+  lastName: z.string().trim().min(2, "Last name must be at least 2 characters").max(50, "Last name too long"),
+  email: z.string().email("Invalid email address").max(255),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"),
+  course: z.string().min(1, "Please select a course"),
+  qualification: z.string().trim().min(2, "Please enter your qualification").max(100),
+  experience: z.string().max(100).optional(),
+  message: z.string().trim().min(20, "Please provide more details (at least 20 characters)").max(1000)
+});
 
 const Admissions = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const rawData = {
+      firstName: formData.get("firstName") as string,
+      lastName: formData.get("lastName") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      course: formData.get("course") as string,
+      qualification: formData.get("qualification") as string,
+      experience: formData.get("experience") as string,
+      message: formData.get("message") as string,
+    };
+
+    // Validate input
+    const validation = admissionSchema.safeParse(rawData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Validation Error",
+        description: firstError.message,
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     toast({
       title: "Application Submitted!",
       description: "We'll review your application and contact you within 24 hours.",
     });
+    e.currentTarget.reset();
+    setIsSubmitting(false);
   };
 
   const steps = [
@@ -104,24 +147,24 @@ const Admissions = () => {
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
+                  <div className="space-y-2">
                       <Label htmlFor="firstName">First Name *</Label>
-                      <Input id="firstName" placeholder="John" required />
+                      <Input id="firstName" name="firstName" placeholder="John" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name *</Label>
-                      <Input id="lastName" placeholder="Doe" required />
+                      <Input id="lastName" name="lastName" placeholder="Doe" required />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" type="email" placeholder="john@example.com" required />
+                      <Input id="email" name="email" type="email" placeholder="john@example.com" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" placeholder="+91 1234567890" required />
+                      <Input id="phone" name="phone" type="tel" placeholder="+91 1234567890" required />
                     </div>
                   </div>
 
@@ -129,6 +172,7 @@ const Admissions = () => {
                     <Label htmlFor="course">Select Course *</Label>
                     <select
                       id="course"
+                      name="course"
                       className="w-full h-10 px-3 rounded-md border border-input bg-background"
                       required
                     >
@@ -146,11 +190,11 @@ const Admissions = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="qualification">Highest Qualification *</Label>
-                      <Input id="qualification" placeholder="e.g., B.Tech in CSE" required />
+                      <Input id="qualification" name="qualification" placeholder="e.g., B.Tech in CSE" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="experience">Work Experience</Label>
-                      <Input id="experience" placeholder="e.g., 2 years" />
+                      <Input id="experience" name="experience" placeholder="e.g., 2 years" />
                     </div>
                   </div>
 
@@ -158,6 +202,7 @@ const Admissions = () => {
                     <Label htmlFor="message">Why do you want to join this course? *</Label>
                     <Textarea
                       id="message"
+                      name="message"
                       placeholder="Tell us about your goals and expectations..."
                       rows={5}
                       required
@@ -182,8 +227,8 @@ const Admissions = () => {
                     </ul>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90">
-                    Submit Application <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Application"} <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </form>
               </CardContent>

@@ -8,16 +8,61 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Building2, Users, TrendingUp, Award, CheckCircle2, ArrowRight } from "lucide-react";
+import { z } from "zod";
+import { useState } from "react";
+
+const corporateSchema = z.object({
+  companyName: z.string().trim().min(2, "Company name must be at least 2 characters").max(100),
+  industry: z.string().max(100).optional(),
+  contactName: z.string().trim().min(2, "Contact name must be at least 2 characters").max(100),
+  designation: z.string().trim().min(2, "Designation required").max(100),
+  email: z.string().email("Invalid email address").max(255),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"),
+  employees: z.string().regex(/^\d+$/, "Must be a valid number"),
+  program: z.string().max(100).optional(),
+  requirements: z.string().trim().min(20, "Please provide more details (at least 20 characters)").max(1000)
+});
 
 const Corporate = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const rawData = {
+      companyName: formData.get("companyName") as string,
+      industry: formData.get("industry") as string,
+      contactName: formData.get("contactName") as string,
+      designation: formData.get("designation") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      employees: formData.get("employees") as string,
+      program: formData.get("program") as string,
+      requirements: formData.get("requirements") as string,
+    };
+
+    // Validate input
+    const validation = corporateSchema.safeParse(rawData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Validation Error",
+        description: firstError.message,
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     toast({
       title: "Request Submitted!",
       description: "Our team will contact you within 24 hours to discuss your requirements.",
     });
+    e.currentTarget.reset();
+    setIsSubmitting(false);
   };
 
   const benefits = [
@@ -242,44 +287,44 @@ const Corporate = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="companyName">Company Name *</Label>
-                      <Input id="companyName" placeholder="Tech Corp Ltd." required />
+                      <Input id="companyName" name="companyName" placeholder="Tech Corp Ltd." required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="industry">Industry</Label>
-                      <Input id="industry" placeholder="e.g., IT Services" />
+                      <Input id="industry" name="industry" placeholder="e.g., IT Services" />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="contactName">Contact Person *</Label>
-                      <Input id="contactName" placeholder="John Doe" required />
+                      <Input id="contactName" name="contactName" placeholder="John Doe" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="designation">Designation *</Label>
-                      <Input id="designation" placeholder="HR Manager" required />
+                      <Input id="designation" name="designation" placeholder="HR Manager" required />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" type="email" placeholder="john@company.com" required />
+                      <Input id="email" name="email" type="email" placeholder="john@company.com" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" placeholder="+91 1234567890" required />
+                      <Input id="phone" name="phone" type="tel" placeholder="+91 1234567890" required />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="employees">Number of Employees to Train *</Label>
-                      <Input id="employees" type="number" placeholder="50" required />
+                      <Input id="employees" name="employees" type="number" placeholder="50" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="program">Training Program Interest</Label>
-                      <Input id="program" placeholder="e.g., Data Analytics" />
+                      <Input id="program" name="program" placeholder="e.g., Data Analytics" />
                     </div>
                   </div>
 
@@ -287,14 +332,15 @@ const Corporate = () => {
                     <Label htmlFor="requirements">Training Requirements *</Label>
                     <Textarea
                       id="requirements"
+                      name="requirements"
                       placeholder="Describe your training needs, goals, and any specific requirements..."
                       rows={5}
                       required
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90">
-                    Submit Request <ArrowRight className="ml-2 h-5 w-5" />
+                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Request"} <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </form>
               </CardContent>

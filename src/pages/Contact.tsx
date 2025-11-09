@@ -9,6 +9,15 @@ import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
+  email: z.string().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number format"),
+  course: z.string().max(100, "Course name too long").optional(),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters")
+});
 const Contact = () => {
   const {
     toast
@@ -19,12 +28,29 @@ const Contact = () => {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    const data = {
+    const rawData = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       course: formData.get("course") as string,
       message: formData.get("message") as string,
+    };
+
+    // Validate input
+    const validation = contactSchema.safeParse(rawData);
+    if (!validation.success) {
+      const firstError = validation.error.errors[0];
+      toast({
+        title: "Validation Error",
+        description: firstError.message,
+        variant: "destructive"
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const data = {
+      ...validation.data,
       timestamp: new Date().toISOString(),
       recipients: ["booragadadheeraj@gmail.com", "navyakanchi9491@gmail.com", "dheerajbooragadda@gmail.com"]
     };
@@ -48,7 +74,6 @@ const Contact = () => {
       });
       e.currentTarget.reset();
     } catch (error) {
-      console.error("Error sending message:", error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",

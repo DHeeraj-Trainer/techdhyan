@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Linkedin, Youtube, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import logo from "@/assets/logo.png";
-
 const Footer = () => {
-  return (
-    <footer className="bg-navy text-white">
+  return <footer className="bg-navy text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* About Section */}
@@ -74,7 +72,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-300">
                 <Phone className="h-4 w-4 text-gold flex-shrink-0" />
-                <span>+91 1234567890</span>
+                <span>+91 8919244700</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-300">
                 <Mail className="h-4 w-4 text-gold flex-shrink-0" />
@@ -109,8 +107,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;

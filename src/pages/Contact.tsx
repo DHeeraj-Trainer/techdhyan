@@ -92,10 +92,8 @@ const Contact = () => {
                   <Phone className="h-8 w-8 text-gold" />
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-navy">Call Us</h3>
-                <p className="text-muted-foreground">+91 8919244700 
-+91 9491933314 Mon - Sat: 9 AM - 7 PM
-
-                <br />
+                <p className="text-muted-foreground">+91 8919244700  
++91 9491933314 Mon - Sat: 9 AM - 7 PM<br />
                   +91 0987654321<br />
                   Mon - Sat: 9 AM - 7 PM
                 </p>

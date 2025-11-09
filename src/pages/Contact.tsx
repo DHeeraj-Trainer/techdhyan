@@ -8,20 +8,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
 const Contact = () => {
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast({
       title: "Message Sent!",
-      description: "We'll get back to you within 24 hours.",
+      description: "We'll get back to you within 24 hours."
     });
   };
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Navbar />
 
       {/* Hero Section */}
@@ -64,8 +62,9 @@ const Contact = () => {
                   <Phone className="h-8 w-8 text-gold" />
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-navy">Call Us</h3>
-                <p className="text-muted-foreground">
-                  +91 1234567890<br />
+                <p className="text-muted-foreground">+91 8919244700
++91 9491933314
+Mon - Sat: 9 AM - 7 PM<br />
                   +91 0987654321<br />
                   Mon - Sat: 9 AM - 7 PM
                 </p>
@@ -117,12 +116,7 @@ const Contact = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us about your requirements..."
-                      rows={6}
-                      required
-                    />
+                    <Textarea id="message" placeholder="Tell us about your requirements..." rows={6} required />
                   </div>
 
                   <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90">
@@ -164,8 +158,6 @@ const Contact = () => {
       </section>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;

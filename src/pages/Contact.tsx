@@ -10,43 +10,40 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       course: formData.get("course") as string,
-      message: formData.get("message") as string,
+      message: formData.get("message") as string
     };
-
     try {
-      const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: data,
+      const {
+        error
+      } = await supabase.functions.invoke("send-contact-email", {
+        body: data
       });
-
       if (error) throw error;
-
       toast({
         title: "Message Sent!",
-        description: "We'll get back to you within 24 hours.",
+        description: "We'll get back to you within 24 hours."
       });
-
       e.currentTarget.reset();
     } catch (error) {
       console.error("Error sending message:", error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setIsSubmitting(false);
@@ -95,9 +92,10 @@ const Contact = () => {
                   <Phone className="h-8 w-8 text-gold" />
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-navy">Call Us</h3>
-                <p className="text-muted-foreground">+91 8919244700
-+91 9491933314
-Mon - Sat: 9 AM - 7 PM<br />
+                <p className="text-muted-foreground">+91 8919244700 
++91 9491933314 Mon - Sat: 9 AM - 7 PM
+
+                <br />
                   +91 0987654321<br />
                   Mon - Sat: 9 AM - 7 PM
                 </p>

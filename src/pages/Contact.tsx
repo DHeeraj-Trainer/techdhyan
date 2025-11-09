@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 const Contact = () => {
   const {
@@ -18,21 +17,31 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       course: formData.get("course") as string,
-      message: formData.get("message") as string
+      message: formData.get("message") as string,
+      timestamp: new Date().toISOString(),
+      recipients: ["booragadadheeraj@gmail.com", "navyakanchi9491@gmail.com", "dheerajbooragadda@gmail.com"]
     };
+    
     try {
-      const {
-        error
-      } = await supabase.functions.invoke("send-contact-email", {
-        body: data
+      // Send to Zapier webhook
+      const webhookUrl = "https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID/";
+      
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "no-cors",
+        body: JSON.stringify(data),
       });
-      if (error) throw error;
+
       toast({
         title: "Message Sent!",
         description: "We'll get back to you within 24 hours."

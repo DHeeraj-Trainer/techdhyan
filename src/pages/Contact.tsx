@@ -8,16 +8,49 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
+
 const Contact = () => {
-  const {
-    toast
-  } = useToast();
-  const handleSubmit = (e: React.FormEvent) => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you within 24 hours."
-    });
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      course: formData.get("course") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      const { error } = await supabase.functions.invoke("send-contact-email", {
+        body: data,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message Sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      e.currentTarget.reset();
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -93,34 +126,34 @@ Mon - Sat: 9 AM - 7 PM<br />
                 <h2 className="text-3xl font-bold text-center mb-8 text-navy">Send Us a Message</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
+                  <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
-                      <Input id="name" placeholder="John Doe" required />
+                      <Input id="name" name="name" placeholder="John Doe" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" type="email" placeholder="john@example.com" required />
+                      <Input id="email" name="email" type="email" placeholder="john@example.com" required />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
+                  <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" placeholder="+91 1234567890" required />
+                      <Input id="phone" name="phone" type="tel" placeholder="+91 1234567890" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="course">Interested Course</Label>
-                      <Input id="course" placeholder="e.g., Data Science" />
+                      <Input id="course" name="course" placeholder="e.g., Data Science" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
-                    <Textarea id="message" placeholder="Tell us about your requirements..." rows={6} required />
+                    <Textarea id="message" name="message" placeholder="Tell us about your requirements..." rows={6} required />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90">
-                    Send Message
+                  <Button type="submit" size="lg" className="w-full bg-navy hover:bg-navy/90" disabled={isSubmitting}>
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>

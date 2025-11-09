@@ -10,7 +10,6 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { z } from "zod";
-
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
   email: z.string().email("Invalid email address").max(255, "Email must be less than 255 characters"),
@@ -26,14 +25,13 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
     const formData = new FormData(e.currentTarget);
     const rawData = {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: formData.get("phone") as string,
       course: formData.get("course") as string,
-      message: formData.get("message") as string,
+      message: formData.get("message") as string
     };
 
     // Validate input
@@ -48,26 +46,22 @@ const Contact = () => {
       setIsSubmitting(false);
       return;
     }
-
     const data = {
       ...validation.data,
       timestamp: new Date().toISOString(),
       recipients: ["booragadadheeraj@gmail.com", "navyakanchi9491@gmail.com", "dheerajbooragadda@gmail.com"]
     };
-    
     try {
       // Send to Zapier webhook
       const webhookUrl = "https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID/";
-      
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         mode: "no-cors",
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       });
-
       toast({
         title: "Message Sent!",
         description: "We'll get back to you within 24 hours."
@@ -126,8 +120,9 @@ const Contact = () => {
                   <Phone className="h-8 w-8 text-gold" />
                 </div>
                 <h3 className="font-bold text-lg mb-2 text-navy">Call Us</h3>
-                <p className="text-muted-foreground">+91 8919244700  
-+91 9491933314 Mon - Sat: 9 AM - 7 PM<br />
+                <p className="text-muted-foreground">+91 8919244700   
++91 9491933314 
+Mon - Sat: 9 AM - 7 PM<br />
                   +91 0987654321<br />
                   Mon - Sat: 9 AM - 7 PM
                 </p>

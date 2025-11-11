@@ -16,13 +16,17 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const courses = [
-    { name: "AI & Machine Learning", path: "/courses/ai-ml" },
-    { name: "Data Science & Analytics", path: "/courses/data-science" },
-    { name: "Programming", path: "/courses/programming" },
-    { name: "Cloud Computing", path: "/courses/cloud" },
-    { name: "Web Development", path: "/courses/web-dev" },
-    { name: "Microsoft Tools", path: "/courses/microsoft" },
-    { name: "Data Visualization", path: "/courses/data-viz" },
+    { name: "AI & Machine Learning", path: "/courses/data-science" },
+    { name: "Programming", path: "/courses" },
+    { name: "Cloud Computing", path: "/courses/cloud-azure" },
+    { name: "Web Development", path: "/courses"},
+    { name: "Microsoft Tools", path: "/courses/microsoft-tools" },
+    { name: "Data Visualization", path: "/courses/data-visualization" },
+    { name: "Full Stack Development", path: "/courses/" },
+    { name: "Data Analytics", path: "/courses/data-analytics" },
+    { name: "CRT Training ", path: "/courses/crt" },
+
+
   ];
 
   return (

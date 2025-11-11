@@ -149,18 +149,18 @@ const Admissions = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                       <Label htmlFor="firstName">First Name *</Label>
-                      <Input id="firstName" name="firstName" placeholder="John" required />
+                      <Input id="firstName" name="firstName" placeholder="Rajesh" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name *</Label>
-                      <Input id="lastName" name="lastName" placeholder="Doe" required />
+                      <Input id="lastName" name="lastName" placeholder="P" required />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" name="email" type="email" placeholder="john@example.com" required />
+                      <Input id="email" name="email" type="email" placeholder="rajesh@example.com" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
@@ -183,7 +183,8 @@ const Admissions = () => {
                       <option value="cloud">Cloud Computing - Azure</option>
                       <option value="web-dev">Web Development</option>
                       <option value="microsoft">Microsoft Tools</option>
-                      <option value="data-viz">Data Visualization</option>
+                      <option value="crt">CRT</option>
+                      <option value="other">Other...</option>
                     </select>
                   </div>
 

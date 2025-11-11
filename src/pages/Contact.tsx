@@ -144,11 +144,11 @@ const Contact = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                       <Label htmlFor="name">Full Name *</Label>
-                      <Input id="name" name="name" placeholder="John Doe" required />
+                      <Input id="name" name="name" placeholder="Rajesh P" required />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" name="email" type="email" placeholder="john@example.com" required />
+                      <Input id="email" name="email" type="email" placeholder="rajesh@example.com" required />
                     </div>
                   </div>
 

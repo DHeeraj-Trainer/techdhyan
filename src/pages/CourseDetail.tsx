@@ -249,7 +249,7 @@ const CourseDetail = () => {
                       <ul className="space-y-2">
                         <li className="flex items-start gap-2">
                           <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span>Official certificate from NAVYA & DHEERAJ TECH STACK</span>
+                          <span>Official certificate from TechDhyan </span>
                         </li>
                         <li className="flex items-start gap-2">
                           <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />

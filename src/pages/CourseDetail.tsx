@@ -58,10 +58,24 @@ const CourseDetail = () => {
               <p className="text-xl text-gray-200 mb-6">{course.description}</p>
               
               <div className="flex flex-wrap gap-4 mb-6">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-5 w-5" />
-                  <span>{course.duration} ({course.totalHours})</span>
-                </div>
+                {course.onlineDuration && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-5 w-5" />
+                    <span>Online: {course.onlineDuration}</span>
+                  </div>
+                )}
+                {course.offlineDuration && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-5 w-5" />
+                    <span>Offline: {course.offlineDuration}</span>
+                  </div>
+                )}
+                {!course.onlineDuration && !course.offlineDuration && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-5 w-5" />
+                    <span>{course.duration} ({course.totalHours})</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <Users className="h-5 w-5" />
                   <span>{course.level}</span>
@@ -114,23 +128,26 @@ const CourseDetail = () => {
                   <h2 className="text-2xl font-bold text-navy mb-6">Course Syllabus</h2>
                   
                   {course.detailedModules.length > 0 ? (
-                    <div className="space-y-4">
-                      {course.detailedModules.map((module) => (
-                        <div key={module.session} className="border-l-4 border-primary pl-4 py-2">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <Badge variant="outline" className="mb-2">Session {module.session}</Badge>
-                              <h3 className="font-bold text-navy">{module.module}</h3>
-                            </div>
-                            <Badge variant="secondary">{module.hours}hrs</Badge>
+                    <div className="space-y-6">
+                      {course.detailedModules.map((module, idx) => (
+                        <div key={idx} className="border-l-4 border-primary pl-6 py-4 bg-cream/30 rounded-r-lg">
+                          <div className="mb-4">
+                            <Badge variant="outline" className="mb-2">Module {idx + 1}</Badge>
+                            <h3 className="text-xl font-bold text-navy mb-3">{module.module}</h3>
                           </div>
-                          <p className="font-semibold text-sm mb-1">{module.topic}</p>
-                          <p className="text-sm text-muted-foreground">{module.subtopics}</p>
+                          <ul className="space-y-2">
+                            {module.topics.map((topic, topicIdx) => (
+                              <li key={topicIdx} className="flex items-start gap-3">
+                                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                                <span className="text-sm text-muted-foreground">{topic}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       ))}
                       <div className="mt-6 p-4 bg-cream rounded-lg">
                         <p className="text-sm text-muted-foreground">
-                          This is a sample of the course syllabus. Complete detailed syllabus will be provided upon enrollment.
+                          This is a comprehensive course syllabus. Detailed session-wise breakdown and additional materials will be provided upon enrollment.
                         </p>
                       </div>
                     </div>

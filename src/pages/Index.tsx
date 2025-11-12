@@ -92,26 +92,30 @@ const Index = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-navy via-navy to-primary text-white py-20 lg:py-32">
+      <section className="relative bg-gradient-to-br from-navy via-navy to-primary text-white py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_50%_50%,_rgba(212,175,55,0.2),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gold/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        </div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 bg-gold text-navy hover:bg-gold/90">
+            <Badge className="mb-6 bg-gold text-navy hover:bg-gold/90 animate-fade-in">
               Established 2025 | Empowering Future Tech Leaders
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in" style={{ animationDelay: "0.2s" }}>
               Bridge the Gap Between <span className="text-gold">Tech</span> & <span className="text-gold">Students</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200">
+            <p className="text-xl md:text-2xl mb-8 text-gray-200 animate-fade-in" style={{ animationDelay: "0.4s" }}>
               Master in-demand skills through industry-oriented, hands-on training programs
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-gold text-navy hover:bg-gold/90 text-lg px-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.6s" }}>
+              <Button asChild size="lg" className="bg-gold text-navy hover:bg-gold/90 text-lg px-8 hover-scale">
                 <Link to="/admissions">
                   Enroll Now <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white/10 text-lg px-8">
+              <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white/10 text-lg px-8 hover-scale">
                 <Link to="/courses">Browse Courses</Link>
               </Button>
             </div>

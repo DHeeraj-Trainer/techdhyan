@@ -79,20 +79,112 @@ const Navbar = () => {
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/programs" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
-                    Programs
-                  </Link>
+                  <NavigationMenuTrigger className="text-sm">Services</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/job-support"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Job Support</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Career guidance and placement assistance</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/corporate"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Corporate Training</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Custom training solutions for businesses</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/workshops"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Workshops & Seminars</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Interactive learning sessions and events</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/career-counseling"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Career Counseling</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Professional career guidance and planning</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/admissions" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
-                    Admissions
-                  </Link>
+                  <NavigationMenuTrigger className="text-sm">Company</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/about"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">About Us</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Learn about our mission and values</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/trainers"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Our Trainers</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Meet our expert instructors</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/gallery"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Gallery</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">View our facilities and events</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to="/blog"
+                            className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          >
+                            <div className="text-sm font-medium leading-none">Blog</div>
+                            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">Latest insights and industry news</p>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <Link to="/corporate" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
-                    Corporate
+                  <Link to="/testimonials" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
+                    Testimonials
                   </Link>
                 </NavigationMenuItem>
 
@@ -125,9 +217,6 @@ const Navbar = () => {
               <Link to="/" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
                 Home
               </Link>
-              <Link to="/about" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
-                About Us
-              </Link>
               <div className="px-4 py-2">
                 <div className="text-sm font-medium mb-2">Courses</div>
                 <div className="pl-4 space-y-2">
@@ -142,14 +231,42 @@ const Navbar = () => {
                   ))}
                 </div>
               </div>
-              <Link to="/programs" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
-                Programs
-              </Link>
-              <Link to="/admissions" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
-                Admissions
-              </Link>
-              <Link to="/corporate" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
-                Corporate Training
+              <div className="px-4 py-2">
+                <div className="text-sm font-medium mb-2">Services</div>
+                <div className="pl-4 space-y-2">
+                  <Link to="/job-support" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Job Support
+                  </Link>
+                  <Link to="/corporate" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Corporate Training
+                  </Link>
+                  <Link to="/workshops" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Workshops & Seminars
+                  </Link>
+                  <Link to="/career-counseling" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Career Counseling
+                  </Link>
+                </div>
+              </div>
+              <div className="px-4 py-2">
+                <div className="text-sm font-medium mb-2">Company</div>
+                <div className="pl-4 space-y-2">
+                  <Link to="/about" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    About Us
+                  </Link>
+                  <Link to="/trainers" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Our Trainers
+                  </Link>
+                  <Link to="/gallery" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Gallery
+                  </Link>
+                  <Link to="/blog" className="block py-1 text-sm text-muted-foreground hover:text-foreground">
+                    Blog
+                  </Link>
+                </div>
+              </div>
+              <Link to="/testimonials" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
+                Testimonials
               </Link>
               <Link to="/contact" className="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md">
                 Contact

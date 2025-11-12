@@ -1,4 +1,4 @@
-import Navigation from "@/components/Navigation";
+import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -75,7 +75,7 @@ const JobSupport = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation />
+      <Navbar />
       
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-br from-primary-light to-background">

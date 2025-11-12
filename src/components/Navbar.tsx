@@ -51,12 +51,6 @@ const Navbar = () => {
                     Home
                   </Link>
                 </NavigationMenuItem>
-{/* 
-                <NavigationMenuItem>
-                  <Link to="/about" className="px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
-                    About Us
-                  </Link>
-                </NavigationMenuItem> */}
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger className="text-sm">Courses</NavigationMenuTrigger>

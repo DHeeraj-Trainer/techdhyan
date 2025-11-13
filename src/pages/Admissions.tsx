@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CheckCircle2, FileText, CreditCard, GraduationCap, ArrowRight } from "lucide-react";
 import { z } from "zod";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const admissionSchema = z.object({
   firstName: z.string().trim().min(2, "First name must be at least 2 characters").max(50, "First name too long"),
@@ -26,7 +27,7 @@ const Admissions = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -55,12 +56,37 @@ const Admissions = () => {
       return;
     }
 
-    toast({
-      title: "Application Submitted!",
-      description: "We'll review your application and contact you within 24 hours.",
-    });
-    e.currentTarget.reset();
-    setIsSubmitting(false);
+    try {
+      const { error } = await supabase.functions.invoke('submit-admission', {
+        body: validation.data
+      });
+
+      if (error) {
+        console.error('Submission error:', error);
+        toast({
+          title: "Submission Failed",
+          description: error.message || "Failed to submit application. Please try again.",
+          variant: "destructive"
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      toast({
+        title: "Application Submitted!",
+        description: "We'll review your application and contact you within 24 hours.",
+      });
+      e.currentTarget.reset();
+    } catch (error: any) {
+      console.error('Unexpected error:', error);
+      toast({
+        title: "Submission Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const steps = [

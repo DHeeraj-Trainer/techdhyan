@@ -14,7 +14,99 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admissions: {
+        Row: {
+          course: string
+          created_at: string
+          email: string
+          experience: string | null
+          first_name: string
+          id: string
+          last_name: string
+          message: string
+          phone: string
+          qualification: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          course: string
+          created_at?: string
+          email: string
+          experience?: string | null
+          first_name: string
+          id?: string
+          last_name: string
+          message: string
+          phone: string
+          qualification: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          course?: string
+          created_at?: string
+          email?: string
+          experience?: string | null
+          first_name?: string
+          id?: string
+          last_name?: string
+          message?: string
+          phone?: string
+          qualification?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      corporate_inquiries: {
+        Row: {
+          company_name: string
+          contact_name: string
+          created_at: string
+          designation: string
+          email: string
+          employees: number
+          id: string
+          industry: string | null
+          phone: string
+          program: string | null
+          requirements: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          company_name: string
+          contact_name: string
+          created_at?: string
+          designation: string
+          email: string
+          employees: number
+          id?: string
+          industry?: string | null
+          phone: string
+          program?: string | null
+          requirements: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          company_name?: string
+          contact_name?: string
+          created_at?: string
+          designation?: string
+          email?: string
+          employees?: number
+          id?: string
+          industry?: string | null
+          phone?: string
+          program?: string | null
+          requirements?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

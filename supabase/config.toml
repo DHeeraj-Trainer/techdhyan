@@ -2,3 +2,9 @@ project_id = "pcazktfcqsgxoqbkgoqv"
 
 [functions.send-contact-email]
 verify_jwt = false
+
+[functions.submit-admission]
+verify_jwt = false
+
+[functions.submit-corporate-inquiry]
+verify_jwt = false
